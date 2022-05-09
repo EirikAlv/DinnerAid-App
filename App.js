@@ -1,112 +1,125 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import React, { useEffect, useState  } from 'react';
+import {Text, View, Button, Alert} from 'react-native';
+import Config from 'react-native-config';
+import Auth0 from 'react-native-auth0';
+import SInfo from 'react-native-sensitive-info';
+import OrderGroceries from './Views/OrderGroceries';
 
-import React from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+const auth0 = new Auth0({ domain: Config.AUTH0_DOMAIN, clientId: Config.AUTH0_CLIENT_ID });
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const App = () => {
 
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
+	const [loggedIn, setloggedIn] = useState(false);
+	const [usedRefreshToken, setUsedRefreshToken] = useState(false);
+	const [profile, setProfile] = useState('profile');
+
+	useEffect(() => {
+		refresh();
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+
+	const logIn = () => {
+		auth0
+			.webAuth
+			.authorize({scope: Config.AUTHO_SCOPE})
+			.then(credentials => {
+				setloggedIn(true);
+				SInfo.setItem('accessToken', credentials.accessToken, {});
+				SInfo.setItem('refreshToken', credentials.refreshToken, {});
+			})
+			.catch(error => console.log(error));
+	};
+
+	const logOut = () => {
+		auth0.webAuth
+			.clearSession({})
+			.then(success => {
+				Alert.alert(
+					'Logged out!'
+				);
+				setloggedIn(false);
+			})
+			.catch(error => {
+				console.log('Log out cancelled');
+			});
+	};
+
+	const refresh = async () => {
+		// const accessToken = await SInfo.getItem('accessToken', {});
+		const refreshToken = await SInfo.getItem('refreshToken', {});
+
+		auth0.auth.refreshToken({refreshToken: refreshToken})
+			.then(credentials => {
+				SInfo.setItem('accessToken', credentials.accessToken, {});
+				SInfo.setItem('refreshToken', credentials.refreshToken, {});
+				setloggedIn(true);
+				setUsedRefreshToken(true);
+			})
+			.catch(error => {
+				logIn();
+				console.log('failed to refresh');
+			});
+	};
+
+	const refreshExp = async () => {
+		const accessToken = await SInfo.getItem('accessToken', {});
+		const refreshToken = await SInfo.getItem('refreshToken', {});
+		if (!accessToken) {
+			return;
+		}
+
+		auth0.auth.userInfo({token: accessToken})
+			.then(data => {
+				setProfile(data.nickname);
+				setloggedIn(true);
+			})
+			.catch(() => {
+				auth0.auth.refreshToken({refreshToken: refreshToken})
+					.then(success => {
+						setloggedIn(true);
+						setUsedRefreshToken(true);
+					}).catch(console.log('failed to refresh'));
+			});
+
+	};
+
+	return (
+		<View>
+			<OrderGroceries />
+			<Button
+				onPress={() => {
+					refresh();
+				}}
+				title={'refresh'}
+			/>
+			{/* <Text>
+				Try editing me!  {}
+			</Text>
+			<Button
+				onPress={() => {
+					logIn();
+				}}
+				title={'Log in'}
+			/>
+			<Text>logged in: {loggedIn ? 'true' : 'false'}</Text>
+			<Button
+				onPress={() => {
+					logOut();
+				}}
+				title={'Logout'}
+			/>
+			<Text>nickname: {profile}</Text>
+			<Text>its newer</Text>
+			<Button
+				onPress={() => {
+					refreshExp();
+				}}
+				title={'Refresh'}
+			/>
+			<Text>Used refresh token: {usedRefreshToken ? 'true' : 'false'}</Text> */}
+		</View>
+	);
 };
-
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 
 export default App;
