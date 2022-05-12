@@ -1,11 +1,11 @@
 import React, { useEffect, useState  } from 'react';
-import {Text, View, Button, Alert} from 'react-native';
+import {View, Button, Alert} from 'react-native';
 import Config from 'react-native-config';
 import Auth0 from 'react-native-auth0';
 import SInfo from 'react-native-sensitive-info';
 import OrderGroceries from './Views/OrderGroceries';
 
-const auth0 = new Auth0({ domain: Config.AUTH0_DOMAIN, clientId: Config.AUTH0_CLIENT_ID });
+const auth0 = new Auth0({ audience: Config.AUDIENCE, domain: Config.AUTH0_DOMAIN, clientId: Config.AUTH0_CLIENT_ID });
 
 const App = () => {
 
@@ -22,7 +22,7 @@ const App = () => {
 	const logIn = () => {
 		auth0
 			.webAuth
-			.authorize({scope: Config.AUTHO_SCOPE})
+			.authorize({scope: Config.AUTHO_SCOPE, audience: Config.AUDIENCE})
 			.then(credentials => {
 				setloggedIn(true);
 				SInfo.setItem('accessToken', credentials.accessToken, {});
@@ -86,13 +86,25 @@ const App = () => {
 
 	return (
 		<View>
-			<OrderGroceries />
 			<Button
 				onPress={() => {
 					refresh();
 				}}
 				title={'refresh'}
 			/>
+			<Button
+				onPress={() => {
+					logIn();
+				}}
+				title={'Log in'}
+			/>
+			<Button
+				onPress={() => {
+					logOut();
+				}}
+				title={'Logout'}
+			/>
+			<OrderGroceries />
 			{/* <Text>
 				Try editing me!  {}
 			</Text>
