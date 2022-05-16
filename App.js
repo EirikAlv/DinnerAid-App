@@ -3,7 +3,14 @@ import {View, Button, Alert} from 'react-native';
 import Config from 'react-native-config';
 import Auth0 from 'react-native-auth0';
 import SInfo from 'react-native-sensitive-info';
+import { NavigationContainer, DefaultTheme  } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import OrderGroceries from './Views/OrderGroceries';
+import OrderRecipes from './Views/OrderRecipes';
+import styles from './style';
+
 
 const auth0 = new Auth0({ audience: Config.AUDIENCE, domain: Config.AUTH0_DOMAIN, clientId: Config.AUTH0_CLIENT_ID });
 
@@ -18,6 +25,8 @@ const App = () => {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	const Stack = createNativeStackNavigator();
+	const Tab = createBottomTabNavigator();
 
 	const logIn = () => {
 		auth0
@@ -84,30 +93,39 @@ const App = () => {
 
 	};
 
+	const MyTheme = {
+		...DefaultTheme,
+		colors: {
+			...DefaultTheme.colors,
+			background: 'black',
+		},
+	};
+
 	return (
-		<View>
+		<NavigationContainer theme={MyTheme}>
+			<Tab.Navigator
+				screenOptions={{
+				headerShown: false,
+				}}>
+				<Tab.Screen
+					name="Groceries"
+					component={OrderGroceries}
+				/>
+				<Tab.Screen
+					name="Recipes"
+					component={OrderRecipes}
+				/>
+			</Tab.Navigator>
+			{/* <Text>
+				Try editing me!  {}
+			</Text>
+			<OrderGroceries />
 			<Button
 				onPress={() => {
 					refresh();
 				}}
 				title={'refresh'}
 			/>
-			<Button
-				onPress={() => {
-					logIn();
-				}}
-				title={'Log in'}
-			/>
-			<Button
-				onPress={() => {
-					logOut();
-				}}
-				title={'Logout'}
-			/>
-			<OrderGroceries />
-			{/* <Text>
-				Try editing me!  {}
-			</Text>
 			<Button
 				onPress={() => {
 					logIn();
@@ -130,7 +148,7 @@ const App = () => {
 				title={'Refresh'}
 			/>
 			<Text>Used refresh token: {usedRefreshToken ? 'true' : 'false'}</Text> */}
-		</View>
+		</NavigationContainer>
 	);
 };
 

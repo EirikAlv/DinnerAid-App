@@ -1,23 +1,41 @@
-import React, { useState } from 'react';
-import {Text, View, Button, FlatList} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Button, FlatList, TextInput } from 'react-native';
 import {get_groceries} from '../Helpers/api.js';
 import GroceryItem from '../Components/GroceryItem';
+import styles from '../style';
 
 const OrderGroceries = () => {
 
     const [groceries_list, set_groceries_list] = useState([]);
+    const [display_list, set_display_list] = useState([]);
+    const [times, setTimes] = useState(0);
 
+    useEffect(() => {
+		getList();
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
     const getList = async () => {
         const list = await get_groceries();
         set_groceries_list(list);
-        console.log(list);
+        set_display_list(list);
+        setTimes(() =>  times + 1);
+        console.log(times);
         console.log('populated list');
     };
 
+    const onSearch = (text) => {
+        let list = groceries_list.filter(x => {
+            return x.norwegian.startsWith(text);
+        });
+        set_display_list(list);
+    };
+
     return (
-        <View>
-            <Text>Hellooooo</Text>
+        <View style={styles.flexOne}>
+            <TextInput
+                onChangeText={onSearch}
+            />
             <Button
                 onPress={() => {
                     getList();
@@ -25,7 +43,7 @@ const OrderGroceries = () => {
                 title={'Get list'}
             />
             <FlatList
-                data={groceries_list}
+                data={display_list}
                 renderItem={({item}) => <GroceryItem item={item}/>}
             />
         </View>

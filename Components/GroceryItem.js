@@ -23,7 +23,6 @@ const GroceryItem = ({item}) => {
         </View>
     );
 
-
 };
 
 export default GroceryItem;

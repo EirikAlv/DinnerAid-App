@@ -5,12 +5,13 @@ import SInfo from 'react-native-sensitive-info';
 const baseUrl = Config.APIBASEURL;
 
 export async function get_groceries() {return await get_async('groceries');}
+export async function get_recipes() {return await get_async('recipes');}
+
 export async function orderGrocery(body) {return await post_async('orderGrocery', body);}
 
 
 async function get_async(endpoint) {
     const token = await SInfo.getItem('accessToken', {});
-    console.log(token);
 
     let res = {};
     console.log(`${baseUrl}${endpoint}`);
