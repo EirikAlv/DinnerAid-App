@@ -5,7 +5,7 @@ import Auth0 from 'react-native-auth0';
 import SInfo from 'react-native-sensitive-info';
 import { NavigationContainer, DefaultTheme  } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import Toast from 'react-native-toast-message';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import OrderGroceries from './Views/OrderGroceries';
 import OrderRecipes from './Views/OrderRecipes';
@@ -116,6 +116,7 @@ const App = () => {
 					component={OrderRecipes}
 				/>
 			</Tab.Navigator>
+			<Toast />
 			{/* <Text>
 				Try editing me!  {}
 			</Text>

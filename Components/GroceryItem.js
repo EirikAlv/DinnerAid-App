@@ -1,13 +1,17 @@
 import React from 'react';
 import { Text, View, Button } from 'react-native';
+import Toast from 'react-native-toast-message';
 import styles from '../style';
 import {orderGrocery} from '../Helpers/api.js';
 
 const GroceryItem = ({item}) => {
 
-    const order_grocery = (grocery) => {
-        console.log(item);
-        orderGrocery(item);
+    const order_grocery = async (grocery) => {
+        let res = await orderGrocery(item);
+        Toast.show({
+            type: 'success',
+            text1: res,
+        });
     };
 
     return (

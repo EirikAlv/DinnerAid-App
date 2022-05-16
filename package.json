@@ -20,7 +20,8 @@
     "react-native-config": "^1.4.5",
     "react-native-safe-area-context": "^4.2.5",
     "react-native-screens": "^3.13.1",
-    "react-native-sensitive-info": "^6.0.0-alpha.9"
+    "react-native-sensitive-info": "^6.0.0-alpha.9",
+    "react-native-toast-message": "^2.1.5"
   },
   "devDependencies": {
     "@babel/core": "7.17.5",

@@ -7,7 +7,7 @@ const baseUrl = Config.APIBASEURL;
 export async function get_groceries() {return await get_async('groceries');}
 export async function get_recipes() {return await get_async('recipes');}
 
-export async function orderGrocery(body) {return await post_async('orderGrocery', body);}
+export async function orderGrocery(body) { return await post_async('orderGrocery', body); }
 
 
 async function get_async(endpoint) {
@@ -19,16 +19,21 @@ async function get_async(endpoint) {
         headers: {
             Authorization: `Bearer ${token}`    // send the access token through the 'Authorization' header
         }
-    }).then(response => res = response);
+    }).then(response => { res = response; });
     return res.data;
 }
 
 async function post_async(endpoint, body) {
     const token = await SInfo.getItem('accessToken', {});
 
-    return await axios.post(`${baseUrl}${endpoint}`, body, {
+    let res = await axios.post(`${baseUrl}${endpoint}`, body, {
         headers: {
-            Authorization: `Bearer ${token}`    // send the access token through the 'Authorization' header
-        }
+            Authorization: `Bearer ${token}`,   // send the access token through the 'Authorization' header
+        },
+    }).then(response => { return response.data; })
+    .catch(error => {
+        return error.message;
     });
+
+    return res;
 }
