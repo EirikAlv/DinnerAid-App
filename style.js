@@ -22,7 +22,6 @@ export default StyleSheet.create({
     backgroundColor: 'black',
     borderRadius: 20,
     padding: 35,
-    
     shadowColor: '000',
     shadowOffset: {
       width: 0,
@@ -31,5 +30,11 @@ export default StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  genericTextInput: {
+    borderColor: 'blue',
+    margin: 4,
+    borderWidth: 1,
+    borderRadius: 10,
   },
 });

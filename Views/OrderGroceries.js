@@ -20,8 +20,6 @@ const OrderGroceries = () => {
         set_groceries_list(list);
         set_display_list(list);
         setTimes(() =>  times + 1);
-        console.log(times);
-        console.log('populated list');
     };
 
     const onSearch = (text) => {
@@ -35,13 +33,15 @@ const OrderGroceries = () => {
         <View style={styles.flexOne}>
             <TextInput
                 onChangeText={onSearch}
+                style={[styles.genericTextInput]}
+                placeholder="type here"
             />
-            <Button
+            {/* <Button
                 onPress={() => {
                     getList();
                 }}
                 title={'Get list'}
-            />
+            /> */}
             <FlatList
                 data={display_list}
                 renderItem={({item}) => <GroceryItem item={item}/>}
