@@ -16,14 +16,10 @@ const RecipeItem = ({recipe}) => {
         });
     };
 
-    const show_recipe = () => {
-        setModalVisible(true);
-    };
-
     return (
         <Pressable
             onPress={() => {
-                show_recipe(recipe);
+                setModalVisible(true);
             }}
         >
             <View style={[styles.listItem]}>
@@ -51,8 +47,7 @@ const RecipeItem = ({recipe}) => {
                         renderItem={({item}) => <RecipeGroceryItem grocery={item}/>}
                     />
                 </View>
-
-                </Modal>
+            </Modal>
             </View>
         </Pressable>
     );

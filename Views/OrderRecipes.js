@@ -1,9 +1,10 @@
-import { View, FlatList, Text } from 'react-native';
+import { View, FlatList, Button } from 'react-native';
 import React, { useEffect, useState  } from 'react';
 import {get_recipes} from '../Helpers/api.js';
 import RecipeItem from '../Components/RecipeItem.js';
+import styles from '../style';
 
-const OrderRecipes = () => {
+const OrderRecipes = ({ navigation }) => {
 
     const [recipe_list, set_recipe_list] = useState([]);
 
@@ -19,7 +20,13 @@ const OrderRecipes = () => {
     };
 
     return (
-        <View>
+        <View style={ styles.flexOne }>
+            <Button
+                onPress={() => {
+                    navigation.navigate('SearchRecipes');
+                }}
+                title={'Search'}
+            />
             <FlatList
                 data={recipe_list}
                 renderItem={({item}) => <RecipeItem recipe={item}/>}

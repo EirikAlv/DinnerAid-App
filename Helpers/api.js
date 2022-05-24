@@ -3,12 +3,14 @@ import Config from 'react-native-config';
 import SInfo from 'react-native-sensitive-info';
 
 const baseUrl = Config.APIBASEURL;
+// const baseUrl = Config.LOCALURL;
 
-export async function get_groceries() {return await get_async('groceries');}
-export async function get_recipes() {return await get_async('recipes');}
+export async function get_groceries() { return await get_async('groceries'); }
+export async function get_recipes() { return await get_async('recipes'); }
 
 export async function orderGrocery(body) { return await post_async('orderGrocery', body); }
-export async function orderRecipe(body, token) { return post_async('orderRecipe', body, token); }
+export async function orderRecipe(body, token) { return post_async('orderRecipe', body); }
+export async function searhRecipes(body, token) { return post_async('searchRecipes', body); }
 
 
 async function get_async(endpoint) {
