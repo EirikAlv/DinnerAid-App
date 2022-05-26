@@ -4,7 +4,7 @@ import {get_recipes} from '../Helpers/api.js';
 import RecipeItem from '../Components/RecipeItem.js';
 import styles from '../style';
 
-const OrderRecipes = ({ navigation }) => {
+const OrderRecipes = () => {
 
     const [recipe_list, set_recipe_list] = useState([]);
 
@@ -21,12 +21,6 @@ const OrderRecipes = ({ navigation }) => {
 
     return (
         <View style={ styles.flexOne }>
-            <Button
-                onPress={() => {
-                    navigation.navigate('SearchRecipes');
-                }}
-                title={'Search'}
-            />
             <FlatList
                 data={recipe_list}
                 renderItem={({item}) => <RecipeItem recipe={item}/>}

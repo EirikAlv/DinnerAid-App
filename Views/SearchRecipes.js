@@ -19,7 +19,11 @@ const SearchRecipes = () => {
     const append_selected_groceries = (grocery) => {
         let temp = selected_groceries;
         temp.push(grocery);
-        console.log(temp);
+        set_selected_groceries(temp);
+    };
+
+    const remove_grocery = (grocery) => {
+        let temp = selected_groceries.filter(g => g.id !== grocery.id);
         set_selected_groceries(temp);
     };
 
@@ -54,7 +58,7 @@ const SearchRecipes = () => {
             />
             <FlatList
                 data={ selected_groceries }
-                renderItem={({ item }) => <GroceryAmountEditor item={ item } returnAmount={ get_amount } />}
+                renderItem={({ item }) => <GroceryAmountEditor item={ item } returnAmount={ get_amount } remove={ remove_grocery } />}
             />
             <Modal
                 animationType="slide"

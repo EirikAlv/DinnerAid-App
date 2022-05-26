@@ -1,8 +1,8 @@
 import React from 'react';
-import { Text, View, TextInput } from 'react-native';
+import { Text, View, TextInput, Button } from 'react-native';
 import styles from '../style';
 
-const GroceryAmountEditor = ({ item, returnAmount }) => {
+const GroceryAmountEditor = ({ item, returnAmount, remove }) => {
 
     const returnGrocery = (amount) => {
         returnAmount(amount, item);
@@ -16,6 +16,12 @@ const GroceryAmountEditor = ({ item, returnAmount }) => {
                 onChangeText={ returnGrocery }
                 style={ [styles.genericTextInput, styles.spacer] }
                 keyboardType="numeric"
+            />
+            <Button
+            onPress={() => {
+                remove(item);
+            }}
+            title={'remove'}
             />
         </View>
     );
