@@ -1,12 +1,13 @@
+import 'react-native-gesture-handler';
 import React, { useEffect, useState  } from 'react';
 import Config from 'react-native-config';
 import Auth0 from 'react-native-auth0';
 import SInfo from 'react-native-sensitive-info';
 import { NavigationContainer, DefaultTheme  } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
-import MainStackNavigator from './navigation/MainStackNavigator';
 import { Provider } from 'react-redux';
 import Store from './Store/Store';
+import DrawerNavigator from './navigation/DrawerNavigator';
 
 const auth0 = new Auth0({ audience: Config.AUDIENCE, domain: Config.AUTH0_DOMAIN, clientId: Config.AUTH0_CLIENT_ID });
 
@@ -59,7 +60,8 @@ const App = () => {
 	return (
 		<Provider store={ Store }>
 			<NavigationContainer theme={ MyTheme }>
-				<MainStackNavigator />
+				{/* <MainStackNavigator /> */}
+				<DrawerNavigator />
 				<Toast />
 			</NavigationContainer>
 		</Provider>
