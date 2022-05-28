@@ -8,6 +8,7 @@ import Toast from 'react-native-toast-message';
 import { Provider } from 'react-redux';
 import Store from './Store/Store';
 import DrawerNavigator from './navigation/DrawerNavigator';
+import DataLoader from './Components/DataLoader';
 
 const auth0 = new Auth0({ audience: Config.AUDIENCE, domain: Config.AUTH0_DOMAIN, clientId: Config.AUTH0_CLIENT_ID });
 
@@ -15,11 +16,25 @@ const App = () => {
 
 	const [loggedIn, setloggedIn] = useState(false);
 	const [usedRefreshToken, setUsedRefreshToken] = useState(false);
+	const [load_data, set_load_data] = useState(false);
 
 	useEffect(() => {
-		refresh();
+		const loading = async () => {
+			await refresh();
+			set_load_data(true);
+			console.log('after refresh');
+		};
+		loading();
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	const loading_data = () => {
+		if (load_data) {
+			return (
+				<DataLoader load={ load_data }/>
+			);
+		}
+	};
 
 	const logIn = () => {
 		auth0
@@ -36,7 +51,7 @@ const App = () => {
 	const refresh = async () => {
 		const refreshToken = await SInfo.getItem('refreshToken', {});
 
-		auth0.auth.refreshToken({refreshToken: refreshToken})
+		await auth0.auth.refreshToken({refreshToken: refreshToken})
 			.then(credentials => {
 				SInfo.setItem('accessToken', credentials.accessToken, {});
 				SInfo.setItem('refreshToken', credentials.refreshToken, {});
@@ -64,6 +79,7 @@ const App = () => {
 				<DrawerNavigator />
 				<Toast />
 			</NavigationContainer>
+			{ loading_data() }
 		</Provider>
 	);
 };
