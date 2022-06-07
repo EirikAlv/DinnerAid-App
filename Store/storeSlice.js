@@ -4,15 +4,19 @@ export const storeSlice = createSlice({
   name: 'store',
   initialState: {
     groceries: [],
+    UOM: [],
   },
   reducers: {
     setGroceries: (state, action) => {
       state.groceries = action.payload;
     },
+    setUOM: (state, action) => {
+      state.UOM = action.payload;
+    },
   },
 });
 
-export const { setGroceries } = storeSlice.actions;
+export const { setGroceries, setUOM } = storeSlice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This

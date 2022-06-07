@@ -3,6 +3,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import OrderGroceries from '../Views/OrderGroceries';
 import OrderRecipes from '../Views/OrderRecipes';
 import SearchRecipes from '../Views/SearchRecipes';
+import CreateGrocery from '../Views/CreateGrocery';
 
 const DrawerNavigator = () => {
 
@@ -13,6 +14,7 @@ const DrawerNavigator = () => {
             <Drawer.Screen name="Groceries" component= {OrderGroceries } />
             <Drawer.Screen name="Recipes" component={ OrderRecipes } />
             <Drawer.Screen name="Search Recipes" component={ SearchRecipes } />
+            <Drawer.Screen name="Create grocery" component={ CreateGrocery } />
       	</Drawer.Navigator>
     );
 };

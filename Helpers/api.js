@@ -7,6 +7,7 @@ const baseUrl = Config.APIBASEURL;
 
 export async function get_groceries() { return await get_async('groceries'); }
 export async function get_recipes() { return await get_async('recipes'); }
+export async function get_uom() { return await get_async('uom'); }
 
 export async function orderGrocery(body) { return await post_async('orderGrocery', body); }
 export async function orderRecipe(body, token) { return post_async('orderRecipe', body); }
