@@ -10,8 +10,9 @@ export async function get_recipes() { return await get_async('recipes'); }
 export async function get_uom() { return await get_async('uom'); }
 
 export async function orderGrocery(body) { return await post_async('orderGrocery', body); }
-export async function orderRecipe(body, token) { return post_async('orderRecipe', body); }
-export async function searhRecipes(body, token) { return post_async('searchRecipes', body); }
+export async function orderRecipe(body) { return post_async('orderRecipe', body); }
+export async function saveGrocery(body) { return post_async('saveGrocery', body); }
+export async function searhRecipes(body) { return post_async('searchRecipes', body); }
 
 
 async function get_async(endpoint) {
@@ -21,8 +22,8 @@ async function get_async(endpoint) {
     console.log(`${baseUrl}${endpoint}`);
     await axios.get(`${baseUrl}${endpoint}`, {
         headers: {
-            Authorization: `Bearer ${token}`    // send the access token through the 'Authorization' header
-        }
+            Authorization: `Bearer ${token}`,    // send the access token through the 'Authorization' header
+        },
     }).then(response => { res = response; });
     return res.data;
 }

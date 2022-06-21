@@ -41,14 +41,14 @@ const OrderGroceries = () => {
 
     return (
         <View style={ styles.flexOne }>
+            <FlatList
+                data={ display_list }
+                renderItem={({ item }) => <GroceryItem item={ item } btnFunc={ order_grocery } btnText={ 'Order' }/>}
+            />
             <TextInput
                 onChangeText={ onSearch }
                 style={ [styles.genericTextInput] }
                 placeholder="type here"
-            />
-            <FlatList
-                data={ display_list }
-                renderItem={({ item }) => <GroceryItem item={ item } btnFunc={ order_grocery } btnText={ 'Order' }/>}
             />
         </View>
     );

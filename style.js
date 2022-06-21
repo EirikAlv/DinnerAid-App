@@ -53,6 +53,9 @@ export default StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor:'green',
 	},
+	m_10: {
+		margin: 10,
+	},
 	p_5: {
 		padding: 5,
 	},
