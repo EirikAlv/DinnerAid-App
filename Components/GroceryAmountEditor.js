@@ -18,10 +18,10 @@ const GroceryAmountEditor = ({ item, returnAmount, remove }) => {
                 keyboardType="numeric"
             />
             <Button
-            onPress={() => {
-                remove(item);
-            }}
-            title={'remove'}
+                onPress={() => {
+                    remove(item);
+                }}
+                title={'remove'}
             />
         </View>
     );
