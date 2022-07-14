@@ -1,8 +1,9 @@
 import { StyleSheet } from 'react-native';
+import theme from './theme';
 
 export default StyleSheet.create({
 	listItem: {
-		padding: 15,
+		padding: 10,
 		flexDirection: 'row',
 		alignItems: 'baseline',
 	},
@@ -20,6 +21,9 @@ export default StyleSheet.create({
 	align_center: {
 		alignItems: 'center',
 	},
+	justify_center: {
+		justifyContent: 'center',
+	},
 	justify_end: {
 		justifyContent: 'flex-end',
 	},
@@ -31,7 +35,7 @@ export default StyleSheet.create({
 	},
 	modalView: {
 		margin: 20,
-		backgroundColor: 'black',
+		backgroundColor: theme.BACKGROUND_COLOR,
 		borderRadius: 20,
 		padding: 35,
 		shadowColor: '000',
@@ -44,17 +48,52 @@ export default StyleSheet.create({
 		elevation: 5,
 	},
 	genericTextInput: {
-		borderColor: 'blue',
+		backgroundColor: theme.TEXTINPUT_COLOR,
 		margin: 4,
-		borderWidth: 1,
-		borderRadius: 10,
+		borderRadius: 20,
+		paddingLeft: 20,
 	},
-	createGroceryText: {
-		alignItems: 'center',
-		backgroundColor:'green',
+	genericButton: {
+		borderRadius: 10,
+		borderWidth: 1,
+		borderColor: theme.PRIMARY_COLOR,
+		padding: 8,
+	},
+	genericButtonText: {
+		fontSize: 15,
+		color: theme.PRIMARY_COLOR,
+	},
+	genericListItemText: {
+		marginLeft: 20,
+		fontWeight: 'normal',
+		fontSize: 18,
+		color: theme.TEXT_COLOR,
+	},
+	separator: {
+		backgroundColor: 'grey',
+		height: 1,
+		marginLeft: 15,
+		marginRight: 15,
+	},
+	selectorItem: {
+		borderRadius: 10,
+		borderWidth: 1,
+		borderColor: theme.PRIMARY_COLOR,
 	},
 	m_10: {
 		margin: 10,
+	},
+	ml_5: {
+		marginLeft: 5,
+	},
+	mr_5: {
+		marginRight: 5,
+	},
+	mt_5: {
+		marginTop: 5,
+	},
+	mb_5: {
+		marginBottom: 5,
 	},
 	p_5: {
 		padding: 5,
@@ -65,8 +104,14 @@ export default StyleSheet.create({
 	p_20: {
 		padding: 20,
 	},
+	b_rad_30: {
+		borderRadius: 30,
+	},
 	flexRow: {
 		flexDirection: 'row',
+	},
+	flexWrap_wrap: {
+		flexWrap: 'wrap',
 	},
 	text_size_13: {
 		fontSize: 13,
@@ -79,5 +124,8 @@ export default StyleSheet.create({
 	},
 	text_align_center: {
 		textAlign: 'center',
+	},
+	font_bold: {
+		fontWeight: 'bold',
 	},
 });

@@ -1,18 +1,19 @@
 import React from 'react';
-import { Text, View, Button } from 'react-native';
+import { Text, View, Pressable } from 'react-native';
 import styles from '../style';
 
 const GroceryItem = ({ item, btnFunc, btnText }) => {
     return (
         <View style={[styles.listItem]}>
-            <Text>{item.norwegian}</Text>
+            <Text style={[styles.genericListItemText]}>{ item.norwegian }</Text>
             <View style={styles.spacer}/>
-            <Button
+            <Pressable
                 onPress={() => {
                     btnFunc(item);
                 }}
-                title={ btnText }
-            />
+                style={ [styles.genericButton] }>
+                <Text style={ [styles.genericButtonText] }> { btnText } </Text>
+            </Pressable>
         </View>
     );
 };

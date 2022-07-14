@@ -7,15 +7,31 @@ import CreateGrocery from '../Views/CreateGrocery';
 
 const DrawerNavigator = () => {
 
+
 	const Drawer = createDrawerNavigator();
 
+  const header_options = {
+      headerStyle: {
+        backgroundColor:'black',
+      },
+      headerTintColor: 'white',
+  };
+
     return (
-		<Drawer.Navigator initialRouteName="Groceries">
-            <Drawer.Screen name="Groceries" component= {OrderGroceries } />
-            <Drawer.Screen name="Recipes" component={ OrderRecipes } />
-            <Drawer.Screen name="Search Recipes" component={ SearchRecipes } />
-            <Drawer.Screen name="Create grocery" component={ CreateGrocery } />
-      	</Drawer.Navigator>
+		<Drawer.Navigator
+			screenOptions={{
+				drawerStyle: {
+					backgroundColor: 'black',
+					width: 240,
+				},
+				drawerInactiveTintColor: 'white',
+			}}
+			initialRouteName="Groceries">
+            <Drawer.Screen options={header_options} name="Groceries" component= { OrderGroceries } />
+            <Drawer.Screen options={ header_options } name="Recipes" component={ OrderRecipes } />
+            <Drawer.Screen options={ header_options } name="Search Recipes" component={ SearchRecipes } />
+            <Drawer.Screen options={ header_options } name="Create grocery" component={ CreateGrocery } />
+    </Drawer.Navigator>
     );
 };
 

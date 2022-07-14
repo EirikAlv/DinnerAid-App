@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, FlatList, TextInput } from 'react-native';
+import { View, FlatList, TextInput, Text } from 'react-native';
 import GroceryItem from '../Components/GroceryItem';
 import styles from '../style';
 import { useSelector } from 'react-redux';
 import Toast from 'react-native-toast-message';
 import {orderGrocery} from '../Helpers/api';
+import theme from '../theme';
 
 const OrderGroceries = () => {
 
@@ -42,13 +43,23 @@ const OrderGroceries = () => {
     return (
         <View style={ styles.flexOne }>
             <FlatList
+                ItemSeparatorComponent={
+                    (() => (
+                      <View
+                        style={[
+                          styles.separator,
+                        ]}
+                      />
+                    ))
+                  }
                 data={ display_list }
                 renderItem={({ item }) => <GroceryItem item={ item } btnFunc={ order_grocery } btnText={ 'Order' }/>}
             />
             <TextInput
                 onChangeText={ onSearch }
+                placeholderTextColor={ theme.TEXT_COLOR }
                 style={ [styles.genericTextInput] }
-                placeholder="type here"
+                placeholder="Search"
             />
         </View>
     );

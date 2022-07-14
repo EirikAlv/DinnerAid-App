@@ -20,13 +20,14 @@ const TagSelector = ({list, return_selected }, ref) => {
     };
 
     const renderSection = (item, index) => {
-        const styles = [style.p_5, style.genericTextInput];
+        const styles = [style.p_5, style.selectorItem, style.ml_5, style.mb_5];
 
         if (selected_index === index) {
             styles.push({
                 backgroundColor: '#ADD8E6',
             });
         }
+
         return (
             <TouchableHighlight
                 style={styles}
@@ -43,7 +44,7 @@ const TagSelector = ({list, return_selected }, ref) => {
 
 
     return (
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+        <View style={ [style.flexRow, style.flexWrap_wrap] }>
             { list.map((item, index) => {
                 return renderSection(item, index);
             }) }

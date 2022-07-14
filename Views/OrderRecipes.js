@@ -16,14 +16,22 @@ const OrderRecipes = () => {
     const load_recipes = async () => {
         const recipes = await get_recipes();
         set_recipe_list(recipes);
-        console.log('populated recipes');
     };
 
     return (
         <View style={ styles.flexOne }>
             <FlatList
-                data={recipe_list}
-                renderItem={({item}) => <RecipeItem recipe={item}/>}
+                ItemSeparatorComponent={
+                    (() => (
+                      <View
+                        style={[
+                          styles.separator,
+                        ]}
+                      />
+                    ))
+                }
+                data={ recipe_list }
+                renderItem={({ item }) => <RecipeItem recipe={ item }/>}
             />
         </View>
     );

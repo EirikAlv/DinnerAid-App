@@ -1,6 +1,6 @@
 
 import React, { useMemo, useRef, useState  } from 'react';
-import { Text, View, TextInput, Button } from 'react-native';
+import { Text, View, TextInput, Button, Pressable, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import style from '../style';
 import { get_sections, get_uoms } from '../Store/selectors';
@@ -8,6 +8,7 @@ import TagSelector from '../Components/TagSelector';
 import Toast from 'react-native-toast-message';
 import { get_groceries, saveGrocery } from '../Helpers/api';
 import { setGroceries } from '../Store/storeSlice';
+import theme from '../theme';
 
 const CreateGrocery = () => {
 
@@ -64,30 +65,56 @@ const CreateGrocery = () => {
     };
 
     return (
-        <View>
-            <Text>Name: </Text>
+        <ScrollView>
+            <Text style={[style.text_align_center, style.text_size_20, style.mt_5]}>
+                { 'Name: ' }
+            </Text>
             <TextInput
                 value={ grocery_name }
                 onChangeText={ set_grocery_name }
                 style={ [style.genericTextInput, style.m_10] } />
-            <Text>Section: </Text>
-            <TagSelector ref={section_ref} list={ sections } return_selected={ set_section }/>
-            <Text>Standard quantity: </Text>
+            <Text style={[style.text_align_center, style.text_size_20, style.mb_5]}>
+                { 'Section: ' }
+            </Text>
+            <TagSelector
+                ref={section_ref}
+                list={ sections }
+                return_selected={ set_section } />
+            <Text style={[style.text_align_center, style.text_size_20, style.mt_5]}>
+                { 'Standard quantity: ' }
+            </Text>
             <TextInput
                 value={ standard_quantity.toString() }
                 keyboardType="numeric"
                 onChangeText={ set_standard_quantity }
                 style={ [style.genericTextInput, style.m_10] } />
-            <Text>Unit of mesure: </Text>
-            <TagSelector ref={ uom_ref } list={ uoms } return_selected={ set_unit_of_mesure }/>
-            <Button
-                disabled={ !can_save }
-                onPress={() => {
-                    save_grocery();
-                }}
-                title={'Save'}
-            />
-        </View>
+            <Text style={[style.text_align_center, style.text_size_20, style.mb_5]}>
+                { 'Unit of mesure: ' }
+            </Text>
+            <TagSelector
+                ref={ uom_ref }
+                list={ uoms }
+                return_selected={ set_unit_of_mesure } />
+            <View style={[style.align_center]}>
+                <Pressable
+                    disabled={ !can_save }
+                    style={({ pressed }) => [
+                        {
+                            backgroundColor: pressed ? theme.BUTTON_PRESSED_COLOR : theme.BACKGROUND_COLOR,
+                        },
+                        style.genericButton,
+                        style.b_rad_30,
+                        !can_save ? { backgroundColor: theme.BUTTON_DISABLED_COLOR, borderWidth: 0} : null,
+                    ]}
+                    onPress={() => {
+                        save_grocery();
+                    }}>
+                        <Text style={[style.text_size_20, style.p_10]}>
+                            { 'Save' }
+                        </Text>
+                </Pressable>
+            </View>
+        </ScrollView>
     );
 };
 

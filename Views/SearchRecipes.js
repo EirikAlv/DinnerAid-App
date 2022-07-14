@@ -63,7 +63,7 @@ const SearchRecipes = () => {
             <Modal
                 animationType="slide"
                 transparent={true}
-                visible={modalVisible}
+                visible={ modalVisible }
                 onRequestClose={() => {
                     console.log('closing modal');
                     setModalVisible(!modalVisible);
@@ -79,10 +79,9 @@ const SearchRecipes = () => {
             </Modal>
             <Modal
                 animationType="slide"
-                transparent={true}
-                visible={recipe_modal_visible}
+                transparent={ true }
+                visible={ recipe_modal_visible }
                 onRequestClose={() => {
-                    console.log('closing modal');
                     set_recipe_modal_visible(!recipe_modal_visible);
                 }}
             >
