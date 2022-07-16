@@ -1,8 +1,17 @@
-import React, { forwardRef, useImperativeHandle, useState } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { View, FlatList, TouchableHighlight, Text } from 'react-native';
 import style from '../style';
 
-const TagSelector = ({list, return_selected }, ref) => {
+const TagSelector = ({list, return_selected, selected }, ref) => {
+
+    useEffect(() => {
+		if (selected) {
+            const index = list.findIndex(x => x === selected);
+            set_selected_index(index);
+        }
+
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
     useImperativeHandle(ref, () => ({
         reset: () => { set_selected_index(-1); },

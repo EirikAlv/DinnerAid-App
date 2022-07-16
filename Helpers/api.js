@@ -12,6 +12,7 @@ export async function get_uom() { return await get_async('uom'); }
 export async function orderGrocery(body) { return await post_async('orderGrocery', body); }
 export async function orderRecipe(body) { return post_async('orderRecipe', body); }
 export async function saveGrocery(body) { return post_async('saveGrocery', body); }
+export async function editGrocery(body) { return post_async('editGrocery', body); }
 export async function searhRecipes(body) { return post_async('searchRecipes', body); }
 
 
